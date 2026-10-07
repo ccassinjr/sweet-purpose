@@ -4,26 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fad5d8" />
+    <title>Sweet Purpose · Doces brasileiros caseiros em Londres</title>
     <meta
       name="description"
-      content="Sweet Purpose - doces brasileiros artesanais, feitos com amor em Londres há quatro anos. Encomendas pelo WhatsApp e Instagram @sweet.purpose.uk."
+      content="Doces brasileiros caseiros, feitos sob encomenda em Londres. Escolha seus doces e envie o pedido pelo WhatsApp."
     />
     <link rel="canonical" href="https://sweetpurpose.co.uk/" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph: WhatsApp and Instagram previews use these -->
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="Sweet Purpose - Doces Brasileiros Artesanais em Londres"
+      content="Sweet Purpose · Doces brasileiros caseiros em Londres"
     />
     <meta
       property="og:description"
-      content="Doces brasileiros artesanais, feitos com amor em Londres há quatro anos. Encomendas pelo WhatsApp e Instagram."
+      content="Doces brasileiros caseiros, feitos sob encomenda em Londres. Escolha seus doces e envie o pedido pelo WhatsApp."
     />
     <meta property="og:url" content="https://sweetpurpose.co.uk/" />
     <meta
       property="og:image"
-      content="https://sweetpurpose.co.uk/assets/hero.jpeg"
+      content="https://sweetpurpose.co.uk/assets/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="567" />
+    <meta
+      property="og:image:alt"
+      content="Mão segurando um casadinho de goiabada, com uma tábua 'Made with Love' ao fundo"
     />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Sweet Purpose" />
@@ -37,24 +46,24 @@
     />
 
     <link rel="stylesheet" href="styles.css" />
-    <title>Sweet Purpose - Doces Brasileiros em Londres</title>
   </head>
   <body>
-    <header class="site-header" role="banner">
+    <header class="site-header">
       <div class="site-header__inner">
         <div class="site-header__brand">
           <div class="site-header__logo-wrap">
+            <!-- alt is empty because the name sits right beside the logo -->
             <img
               class="site-header__logo"
-              src="assets/Logo.jpeg"
-              alt="Sweet Purpose, logótipo"
+              src="assets/logo.jpeg"
+              alt=""
               width="56"
               height="56"
             />
           </div>
           <div class="site-header__text">
             <p class="site-header__name">Sweet Purpose</p>
-            <p class="site-header__tagline">Homemade with Love</p>
+            <p class="site-header__tagline" lang="en">Homemade with Love</p>
           </div>
         </div>
         <a
@@ -68,179 +77,392 @@
       </div>
     </header>
 
-    <main role="main">
+    <main>
       <section class="hero" aria-labelledby="hero-heading">
         <div class="hero__content">
-          <span class="hero__eyebrow js-reveal">Novidades chegando</span>
-          <h1 class="hero__headline js-reveal" id="hero-heading">
+          <h1 class="hero__headline" id="hero-heading">
             Doces brasileiros<br />artesanais, feitos<br />com amor em Londres
           </h1>
-          <p class="hero__sub js-reveal">
-            O site está chegando. Mas a gente já está aqui há quatro anos,
-            fazendo doces com amor. Manda uma mensagem e faz seu pedido agora
-            mesmo.
+          <p class="hero__sub">
+            Cocadas, palha italiana, casadinhos e balas de coco, feitos sob encomenda.
           </p>
-          <div class="hero__actions js-reveal">
-            <a
-              class="btn btn--primary"
-              href="https://wa.me/447547266089"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Fazer pedido pelo WhatsApp (abre em nova aba)"
-            >
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#pedido">
+              Monte seu pedido
               <svg
-                class="btn__icon"
+                class="icon btn__icon"
                 aria-hidden="true"
                 focusable="false"
                 viewBox="0 0 24 24"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"
-                />
+                <path d="M12 5v14M6 13l6 6 6-6" />
               </svg>
-              Pedir pelo WhatsApp
-            </a>
-            <a
-              class="btn btn--secondary"
-              href="https://www.instagram.com/sweet.purpose.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Ver Sweet Purpose no Instagram (abre em nova aba)"
-            >
-              <svg
-                class="btn__icon"
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"
-                />
-              </svg>
-              Ver no Instagram
             </a>
           </div>
         </div>
-        <div class="hero__media js-reveal">
+        <div class="hero__media">
           <img
             class="hero__image"
             src="assets/hero.jpeg"
-            alt="Mão segurando biscoito artesanal com tábua 'Made with Love' ao fundo"
+            alt="Mão segurando um casadinho de goiabada, com uma tábua 'Made with Love' ao fundo"
             width="900"
             height="1200"
           />
         </div>
       </section>
 
-      <section class="gallery" aria-label="Galeria de produtos">
+      <!-- Monte seu pedido: the cards are drawn from js/products.js -->
+      <section class="order" id="pedido" aria-labelledby="order-title">
+        <div class="order__inner">
+          <h2 class="section-title" id="order-title">Monte seu pedido</h2>
+          <p class="order__lead">Escolha seus doces e envie pelo WhatsApp.</p>
+
+          <div class="order__layout">
+            <div class="order__products">
+              <div id="products"></div>
+              <!-- Shown when JavaScript is off. The same message is in the template below, for when the catalogue fails to draw -->
+              <noscript>
+                <p class="order__fallback">
+                  Não conseguimos mostrar os doces aqui.
+                  <a
+                    class="order__more-link"
+                    href="https://wa.me/447547266089"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Faça seu pedido pelo WhatsApp.</a
+                  >
+                </p>
+              </noscript>
+              <template id="catalogue-error-template">
+                <p class="order__fallback">
+                  Não conseguimos mostrar os doces aqui.
+                  <a
+                    class="order__more-link"
+                    href="https://wa.me/447547266089"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Faça seu pedido pelo WhatsApp.</a
+                  >
+                </p>
+              </template>
+              <p class="order__more">
+                Procurando outro doce do nosso menu?
+                <a
+                  class="order__more-link"
+                  href="https://wa.me/447547266089"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Fale com a gente pelo WhatsApp.</a
+                >
+              </p>
+            </div>
+
+            <div class="order__aside">
+              <!-- Resumo do pedido: static for now. Quantities and totals arrive at Stage 3 -->
+              <section class="summary" id="resumo" aria-labelledby="summary-title">
+                <div class="summary__head">
+                  <h2 class="summary__title" id="summary-title" tabindex="-1">
+                    Resumo do pedido
+                  </h2>
+                </div>
+
+                <div class="summary__empty">
+                  <svg
+                    class="icon summary__empty-icon"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="12" cy="8.5" r="4.5" />
+                    <path d="M4 13q1-1.2 2 0t2 0 2 0 2 0 2 0 2 0 2 0 2 0" />
+                    <path d="m5 14 1.75 6.5h10.5L19 14" />
+                    <path d="M9.5 14.5 10 20M14.5 14.5 14 20" />
+                  </svg>
+                  <p class="summary__empty-title">Seu pedido ainda está vazio.</p>
+                  <p class="summary__empty-text">
+                    Use o + nos doces que quiser. Eles aparecem aqui.
+                  </p>
+                </div>
+
+                <!-- Shown once the basket has something in it -->
+                <div class="summary__details" hidden>
+                  <div class="summary__total">
+                    <span class="summary__total-label">Total estimado</span>
+                    <span class="summary__total-value price">£0.00</span>
+                  </div>
+                  <p class="summary__note">
+                    Entrega não inclusa. Confirmamos o valor final pelo WhatsApp.
+                  </p>
+
+                  <fieldset class="field summary__field">
+                    <legend class="field__label">Como prefere receber?</legend>
+                    <div class="choice">
+                      <label class="choice__option">
+                        <input class="choice__input" type="radio" name="recebimento" value="retirada" />
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                          <path d="M4.5 11v8.5h15V11" />
+                          <path d="M3 10.5 4.75 4.5h14.5L21 10.5" />
+                          <path d="M3 10.5a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0" />
+                          <path d="M10 19.5V15h4v4.5" />
+                        </svg>
+                        Retirada
+                      </label>
+                      <label class="choice__option">
+                        <input class="choice__input" type="radio" name="recebimento" value="entrega" />
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                          <path d="M14 16.5V6H2.5v10.5H4.5" />
+                          <path d="M14 9.5h4l3.5 3.5v3.5h-2" />
+                          <path d="M9.5 16.5h5" />
+                          <circle cx="7" cy="17" r="2" />
+                          <circle cx="17" cy="17" r="2" />
+                        </svg>
+                        Entrega
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <div class="field summary__field">
+                    <label class="field__label" for="data">Data preferida</label>
+                    <input class="date-input" type="date" id="data" />
+                  </div>
+
+                  <p class="summary__payment">
+                    Pagamento antecipado, com opção de 50% na reserva e 50% antes do envio ou da entrega.
+                  </p>
+                </div>
+
+                <div class="summary__send">
+                  <button
+                    class="send"
+                    type="button"
+                    aria-disabled="true"
+                    aria-describedby="send-hint"
+                  >
+                    <svg
+                      class="icon send__icon"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"
+                      />
+                    </svg>
+                    Enviar pelo WhatsApp
+                  </button>
+                  <p class="send__hint" id="send-hint">
+                    Escolha pelo menos um doce para enviar.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gallery" aria-labelledby="gallery-title">
+        <h2 class="section-title" id="gallery-title">Galeria de doces</h2>
         <div class="gallery__grid">
-          <figure class="gallery__item js-reveal">
+          <figure class="gallery__item reveal">
             <img
+              class="gallery__image"
               src="assets/photo-01.jpeg"
-              alt="Beijinhos de chocolate com coco numa tábua em formato de coração"
+              alt="Biscoitos em formato de coração com a palavra 'Love' em relevo, sobre uma grade"
               loading="lazy"
-              width="600"
-              height="600"
+              width="675"
+              height="1200"
             />
           </figure>
 
-          <figure class="gallery__item js-reveal">
+          <figure class="gallery__item reveal">
             <img
+              class="gallery__image"
               src="assets/photo-02.jpeg"
-              alt="Bolinhas de coco e abacaxi numa tábua redonda de madeira"
+              alt="Uvas verdes cobertas com uma casquinha clara e brilhante, duas cortadas ao meio, sobre uma grade, com um cacho de uvas ao fundo"
               loading="lazy"
-              width="600"
+              width="1200"
               height="800"
             />
           </figure>
 
-          <figure class="gallery__item js-reveal">
+          <figure class="gallery__item reveal">
             <img
+              class="gallery__image"
               src="assets/photo-03.jpeg"
-              alt="Morangos recheados com cocada, cortados ao meio para mostrar o interior"
+              alt="Morango do amor cortado ao meio numa tábua de madeira, mostrando o morango por dentro"
               loading="lazy"
-              width="600"
-              height="800"
+              width="1152"
+              height="2048"
             />
           </figure>
 
-          <figure class="gallery__item js-reveal">
+          <figure class="gallery__item reveal">
             <img
+              class="gallery__image"
               src="assets/photo-04.jpeg"
               alt="Caixa de biscoitos Sweet Purpose com laço vermelho"
               loading="lazy"
-              width="600"
-              height="700"
+              width="1024"
+              height="1536"
             />
           </figure>
 
-          <figure class="gallery__item js-reveal">
+          <figure class="gallery__item reveal">
             <img
+              class="gallery__image"
               src="assets/photo-05.jpeg"
-              alt="Fudge de maizena empilhado sobre tábua de madeira com biscoitos Maizena"
+              alt="Mão segurando um doce redondo de chocolate branco com listras de chocolate, cortado ao meio para mostrar o recheio escuro"
               loading="lazy"
-              width="600"
-              height="700"
+              width="1200"
+              height="1108"
             />
           </figure>
 
-          <figure class="gallery__item js-reveal">
+          <figure class="gallery__item reveal">
             <img
+              class="gallery__image"
               src="assets/photo-06.jpeg"
               alt="Biscoitos artesanais numa tigela ao lado de caneca Sweet Purpose"
               loading="lazy"
-              width="600"
-              height="800"
+              width="1152"
+              height="2048"
             />
           </figure>
         </div>
       </section>
 
-      <section class="cta-band" aria-labelledby="cta-heading">
-        <div class="cta-band__inner">
-          <p class="cta-band__eyebrow">Quatro anos de amor e sabor</p>
-          <h2 class="cta-band__heading" id="cta-heading">
-            Quer fazer um pedido?
-          </h2>
-          <p class="cta-band__sub">
-            Fala com a gente pelo WhatsApp ou nos encontra no Instagram.
-          </p>
-          <div class="cta-band__actions">
-            <a
-              class="btn btn--white"
-              href="https://wa.me/447547266089"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Fazer pedido pelo WhatsApp (abre em nova aba)"
-              >Pedir pelo WhatsApp</a
-            >
-            <a
-              class="btn btn--outline-white"
-              href="https://www.instagram.com/sweet.purpose.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Ver Sweet Purpose no Instagram (abre em nova aba)"
-              >Ver no Instagram</a
-            >
-          </div>
+      <section class="why" aria-labelledby="why-title">
+        <h2 class="section-title" id="why-title">Por que escolher a Sweet Purpose?</h2>
+        <ul class="why__list" role="list">
+          <li class="why__item">
+            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z" />
+            </svg>
+            <p class="why__text">Feito artesanalmente</p>
+          </li>
+          <li class="why__item">
+            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M12 21c-4.5 0-8-3.4-8-8 0-5 4-8.5 8-10 4 1.5 8 5 8 10 0 4.6-3.5 8-8 8z" />
+              <path d="M12 21V9M12 15l3-3M12 12l-3-3" />
+            </svg>
+            <p class="why__text">
+              Ingredientes frescos
+              <span class="why__detail">sempre que possível, como o coco</span>
+            </p>
+          </li>
+          <li class="why__item">
+            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8.5" />
+              <path d="M12 7.5V12l3 2" />
+            </svg>
+            <p class="why__text">Produção sob encomenda</p>
+          </li>
+          <li class="why__item">
+            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z" />
+              <path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9" />
+            </svg>
+            <p class="why__text">
+              Envio para todo o Reino Unido
+              <span class="why__detail">exceto produtos delicados</span>
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-title">
+        <h2 class="section-title" id="faq-title">Perguntas frequentes</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary class="faq__question">Como fazer o pedido?</summary>
+            <p class="faq__answer">
+              Escolha os doces, envie pelo WhatsApp com a data de entrega ou retirada e aguarde a confirmação com os dados para pagamento.
+            </p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">Como funciona o pagamento?</summary>
+            <p class="faq__answer">
+              O pagamento é antecipado. Se preferir, pague 50% na reserva e 50% antes do envio ou da entrega.
+            </p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">Vocês enviam para todo o Reino Unido?</summary>
+            <p class="faq__answer">
+              Sim, exceto produtos delicados, que são só para retirada ou entrega local, com taxa. O prazo de entrega é de até 48 horas após o envio.
+            </p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">Como conservar os doces?</summary>
+            <p class="faq__answer">
+              Guarde em local fresco e seco. A Bala de Coco fica melhor se consumida em até 2 dias. Na geladeira, em pote bem fechado, dura até 7 dias.
+            </p>
+          </details>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer" role="contentinfo">
+    <footer class="site-footer">
       <div class="site-footer__inner">
-        <p class="site-footer__tagline">Homemade with Love</p>
+        <p class="site-footer__tagline" lang="en">Homemade with Love</p>
+        <p class="site-footer__links">
+          <a
+            class="site-footer__link"
+            href="https://wa.me/447547266089"
+            target="_blank"
+            rel="noopener noreferrer"
+            >WhatsApp</a
+          >
+          <a
+            class="site-footer__link"
+            href="https://www.instagram.com/sweet.purpose.uk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+        </p>
         <p class="site-footer__copy">
           © <span id="js-year">2026</span> Sweet Purpose · sweetpurpose.co.uk
         </p>
-        <p class="site-footer__credit">designed by ccassinjr</p>
+        <p class="site-footer__credit" lang="en">designed by ccassinjr</p>
       </div>
     </footer>
 
-    <script src="javascript.js"></script>
+    <!-- One product card. js/order-ui.js clones it for each live product -->
+    <template id="product-template">
+      <article class="product">
+        <img
+          class="product__photo product__photo--image"
+          alt=""
+          width="600"
+          height="600"
+          loading="lazy"
+        />
+        <div class="product__photo product__photo--empty" aria-hidden="true">
+          <svg class="icon product__photo-icon" focusable="false" viewBox="0 0 24 24">
+            <circle cx="12" cy="8.5" r="4.5" />
+            <path d="M4 13q1-1.2 2 0t2 0 2 0 2 0 2 0 2 0 2 0 2 0" />
+            <path d="m5 14 1.75 6.5h10.5L19 14" />
+            <path d="M9.5 14.5 10 20M14.5 14.5 14 20" />
+          </svg>
+          <span>Foto em breve</span>
+        </div>
+        <div class="product__body">
+          <h4 class="product__name"></h4>
+          <p class="product__ingredients"></p>
+        </div>
+        <div class="product__allergens">
+          <p class="product__allergen-line product__allergen-line--en" lang="en"></p>
+          <p class="product__allergen-line product__allergen-line--pt"></p>
+        </div>
+        <ul class="product__sizes" role="list">
+          <li class="size">
+            <span class="size__label"></span>
+            <span class="size__price price"></span>
+          </li>
+        </ul>
+      </article>
+    </template>
+
+    <script type="module" src="javascript.js"></script>
   </body>
 </html>

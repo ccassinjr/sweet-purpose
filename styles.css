@@ -2,6 +2,7 @@
    Design tokens
    ============================================ */
 :root {
+  /* Brand colours and fonts: locked */
   --bg:           #fad5d8;
   --surface:      #f5c6ca;
   --surface-alt:  #efb8bd;
@@ -14,12 +15,64 @@
   --accent:       #c27a80;
   --font-display: 'Cormorant Garamond', serif;
   --font-body:    'DM Sans', sans-serif;
-  --white-subtle: rgba(254, 245, 245, 0.6);
-  --white-ghost:  rgba(254, 245, 245, 0.08);
+
+  /* Spacing: 4px steps. The number is the multiple of 4px, so --space-6 is 24px */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --content-max:   70rem;
+  --gutter:        var(--space-5);
+  --section-space: clamp(4rem, 2.5rem + 5vw, 7rem);
+  --tap-target:    2.75rem;
+
+  /* Type: the classical scale, plus two fluid display sizes */
+  --text-xs:      0.75rem;
+  --text-sm:      0.875rem;
+  --text-md:      1rem;
+  --text-lg:      1.125rem;
+  --text-xl:      1.3125rem;
+  --text-2xl:     1.5rem;
+  --text-3xl:     1.75rem;
+  --text-4xl:     2.25rem;
+  --text-title:   clamp(2.5rem, 1.9rem + 2.4vw, 3.75rem);   /* section titles: 40 to 60px */
+  --text-display: clamp(3rem, 1.85rem + 4.6vw, 5.25rem);    /* hero: 48 to 84px */
+  --leading-tight:   0.95;
+  --leading-snug:    1.15;
+  --leading-compact: 1.45;   /* small text */
+  --leading-normal:  1.6;
+
+  /* Radius: an inner corner is the outer radius minus the padding, so nested corners line up */
+  --radius-sm:   0.5rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1.25rem;
+  --radius-xl:   1.5rem;
+  --radius-pill: 999px;
+
+  /* Shadows: tinted with --primary, so they read as warm pink depth instead of grey */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--primary) 12%, transparent);
+  --shadow-md: 0 1px 2px color-mix(in srgb, var(--primary) 8%, transparent),
+               0 8px 20px -6px color-mix(in srgb, var(--primary) 20%, transparent);
+  --shadow-lg: 0 2px 6px color-mix(in srgb, var(--primary) 12%, transparent),
+               0 18px 40px -10px color-mix(in srgb, var(--primary) 34%, transparent);
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ============================================
-   Reset & base
+   Reset and base
    ============================================ */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -30,14 +83,16 @@
 html {
   font-size: 100%;
   scroll-behavior: smooth;
+  /* The header doesn't stick, so anchors only need a little air above them */
+  scroll-padding-top: var(--space-4);
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -52,13 +107,54 @@ a {
   text-decoration: none;
 }
 
-/* ============================================
-   Focus styles
-   ============================================ */
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
 :focus-visible {
   outline: 2px solid var(--primary);
-  outline-offset: 4px;
-  border-radius: 3px;
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Simple line icons, drawn inline in the markup */
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Prices: DM Sans has no tabular figures, Cormorant does */
+.price {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+/* Title shared by the gallery, the reasons and the questions */
+.section-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--text-title);
+  line-height: var(--leading-snug);
 }
 
 /* ============================================
@@ -67,16 +163,16 @@ a {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.8125rem 1.625rem;
-  border-radius: 3rem;
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-md);
   font-weight: 500;
-  line-height: 1;
+  line-height: var(--leading-tight);
   white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.18s ease, border-color 0.2s ease;
   cursor: pointer;
+  transition: background-color var(--duration-base) ease, transform var(--duration-fast) ease;
 }
 
 .btn:hover {
@@ -96,71 +192,32 @@ a {
   background-color: var(--primary-dark);
 }
 
-.btn--secondary {
-  background-color: transparent;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
-}
-
-.btn--secondary:hover {
-  background-color: var(--surface);
-}
-
-.btn--white {
-  background-color: var(--white);
-  color: var(--primary);
-}
-
-.btn--white:hover {
-  background-color: var(--bg);
-}
-
-.btn--outline-white {
-  background-color: transparent;
-  color: var(--white);
-  border: 1.5px solid var(--white-subtle);
-}
-
-.btn--outline-white:hover {
-  border-color: var(--white);
-  background-color: var(--white-ghost);
-}
-
 .btn__icon {
   width: 1.0625rem;
   height: 1.0625rem;
-  flex-shrink: 0;
 }
 
 /* ============================================
    Site header
    ============================================ */
 .site-header {
-  padding: 1.25rem 1.25rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: var(--bg);
-  transition: box-shadow 0.25s ease;
-}
-
-.site-header.is-scrolled {
-  box-shadow: 0 1px 0 var(--border);
+  padding: var(--space-5) var(--gutter);
 }
 
 .site-header__inner {
-  max-width: 70rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap; /* safety net: if the row ever gets too wide, the handle drops below instead of overflowing */
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-2) var(--space-4);
 }
 
 .site-header__brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .site-header__logo-wrap {
@@ -175,93 +232,86 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
   transform: scale(1.3);
 }
 
 .site-header__name {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.1875rem;
+  font-size: var(--text-xl);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: var(--leading-snug);
   color: var(--primary);
 }
 
 .site-header__tagline {
-  font-size: 0.6563rem;
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 400;
-  margin-top: 0.1875rem;
+  color: var(--text);
   white-space: nowrap;
 }
 
 .site-header__handle {
-  font-size: 0.8125rem;
+  /* Hidden on phones, where the brand fills the row. The footer carries the Instagram link */
+  display: none;
+  font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--muted);
+  color: var(--text);
   letter-spacing: 0.02em;
-  transition: color 0.18s ease;
+  transition: color var(--duration-fast) ease;
 }
 
 .site-header__handle:hover {
-  color: var(--primary);
+  color: var(--primary-dark);
+}
+
+@media (min-width: 40rem) {
+  .site-header__handle {
+    display: block;
+  }
 }
 
 /* ============================================
    Hero
    ============================================ */
 .hero {
-  max-width: 70rem;
+  max-width: var(--content-max);
   margin: 0 auto;
-  padding: 2rem 1.25rem 3.5rem;
+  padding: var(--space-8) var(--gutter) var(--space-16);
   display: flex;
   flex-direction: column;
-  gap: 2.25rem;
-}
-
-.hero__eyebrow {
-  display: inline-block;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
+  gap: var(--space-8);
 }
 
 .hero__headline {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
-  font-size: 2.875rem;
-  line-height: 1.12;
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
   color: var(--primary);
 }
 
 .hero__sub {
-  font-size: 1rem;
-  color: var(--muted);
-  line-height: 1.7;
   max-width: 26rem;
-  margin-top: 1.125rem;
+  margin-top: var(--space-5);
+  font-size: var(--text-lg);
+  line-height: var(--leading-compact);
+  color: var(--text);
 }
 
 .hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 2rem;
+  margin-top: var(--space-8);
 }
 
 .hero__media {
   width: 100%;
-  border-radius: 1.25rem;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background-color: var(--surface);
-  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
 }
 
 .hero__image {
@@ -271,34 +321,27 @@ a {
   object-position: center 25%;
 }
 
-@media (min-width: 640px) {
-  .hero__headline {
-    font-size: 3.5rem;
-  }
+@media (min-width: 40rem) {
   .hero__image {
     height: 28rem;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 48rem) {
   .hero {
     flex-direction: row;
     align-items: center;
-    padding: 3rem 2rem 5rem;
-    gap: 3.5rem;
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-24);
+    gap: var(--space-12);
   }
 
   .hero__content {
     flex: 1 1 52%;
   }
 
-  .hero__headline {
-    font-size: 3.75rem;
-  }
-
   .hero__media {
     flex: 0 0 40%;
-    border-radius: 1.5rem;
   }
 
   .hero__image {
@@ -307,14 +350,9 @@ a {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .hero {
-    padding: 3.5rem 2rem 6rem;
-    gap: 5rem;
-  }
-
-  .hero__headline {
-    font-size: 4.75rem;
+    gap: var(--space-16);
   }
 
   .hero__image {
@@ -323,120 +361,807 @@ a {
 }
 
 /* ============================================
-   Gallery
+   Order section
    ============================================ */
-.gallery {
-  padding: 0 1.25rem 4rem;
-  max-width: 70rem;
+.order {
+  padding: var(--space-12) var(--gutter) var(--section-space);
+}
+
+.order__inner {
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
-.gallery__grid {
-  columns: 2;
-  column-gap: 0.625rem;
+.order__lead {
+  margin-top: var(--space-2);
+  font-size: var(--text-lg);
 }
 
-.gallery__item {
-  break-inside: avoid;
-  margin-bottom: 0.625rem;
-  border-radius: 0.875rem;
-  overflow: hidden;
+.order__layout {
+  display: grid;
+  gap: var(--space-12);
+  margin-top: var(--space-8);
+}
+
+.order__fallback {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--white);
+}
+
+.order__more {
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.order__more-link {
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+/* ============================================
+   Categories
+   ============================================ */
+.category + .category {
+  margin-top: var(--space-12);
+}
+
+.category__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.category__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-snug);
+}
+
+.category__note {
+  font-size: var(--text-sm);
+}
+
+.products {
+  list-style: none;
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* ============================================
+   Product card
+   Phones: photo beside the name, like a menu line.
+   Wider screens: photo on top, in a grid.
+   ============================================ */
+.product {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  grid-template-areas:
+    "photo     body"
+    "allergens allergens"
+    "sizes     sizes";
+  column-gap: var(--space-4);
+  row-gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-3);
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--duration-base) ease;
+}
+
+/* A product with something in the basket gets a ring, so choices stand out while scrolling */
+.product--selected {
+  box-shadow: 0 0 0 2px var(--primary), var(--shadow-md);
+}
+
+.product__photo {
+  grid-area: photo;
+  width: 100%;
+  height: auto; /* the img height attribute would otherwise beat aspect-ratio */
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: calc(var(--radius-lg) - var(--space-3));
   background-color: var(--surface);
 }
 
-.gallery__item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.5s ease;
+/* Shown until a product has its photo */
+.product__photo--empty {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-1);
+  color: var(--text);
+  font-size: var(--text-xs);
+  text-align: center;
 }
 
-.gallery__item:hover img {
-  transform: scale(1.04);
+.product__photo-icon {
+  width: 2rem;
+  height: 2rem;
+  stroke-width: 1.25;
 }
 
-@media (min-width: 768px) {
-  .gallery {
-    padding: 0 2rem 5rem;
-  }
-
-  .gallery__grid {
-    columns: 3;
-    column-gap: 0.875rem;
-  }
-
-  .gallery__item {
-    margin-bottom: 0.875rem;
-    border-radius: 1.125rem;
-  }
+.product__body {
+  grid-area: body;
+  align-self: center;
 }
 
-@media (min-width: 1024px) {
-  .gallery__grid {
-    column-gap: 1.125rem;
+.product__name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+}
+
+.product__ingredients {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  line-height: var(--leading-compact);
+  color: var(--muted);
+}
+
+/* English first, Portuguese second, same size and weight */
+.product__allergens {
+  grid-area: allergens;
+  align-self: start;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--bg);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  line-height: var(--leading-compact);
+}
+
+.product__allergen-line + .product__allergen-line {
+  margin-top: var(--space-1);
+}
+
+.product__allergen-label {
+  font-weight: 500;
+}
+
+.product__sizes {
+  grid-area: sizes;
+  list-style: none;
+}
+
+/* One line per size: label, price, stepper */
+.size {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding-left: var(--space-1);
+}
+
+.size + .size {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--surface);
+}
+
+.size__label {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.size__price {
+  font-size: var(--text-xl);
+}
+
+@media (min-width: 40rem) {
+  .products {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--space-6);
   }
 
-  .gallery__item {
-    margin-bottom: 1.125rem;
-    border-radius: 1.25rem;
+  .product {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "photo"
+      "body"
+      "allergens"
+      "sizes";
+  }
+
+  .product__body {
+    align-self: start;
+    padding-inline: var(--space-1);
+  }
+
+  .product__name {
+    font-size: var(--text-2xl);
   }
 }
 
 /* ============================================
-   CTA band
+   Quantity stepper (wired up at Stage 3)
    ============================================ */
-.cta-band {
-  background-color: var(--primary);
-  padding: 4.5rem 1.25rem;
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  background-color: var(--white);
+  box-shadow: inset 0 0 0 1.5px var(--border);
+  transition: background-color var(--duration-base) ease, box-shadow var(--duration-base) ease;
+}
+
+.stepper__button {
+  display: grid;
+  place-items: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--primary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.stepper__button:hover {
+  background-color: var(--bg);
+}
+
+.stepper__button:active {
+  transform: scale(0.92);
+}
+
+/* aria-disabled instead of disabled, so focus isn't lost when a limit is reached */
+.stepper__button[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.stepper__button[aria-disabled="true"]:hover {
+  background: none;
+}
+
+.stepper__button[aria-disabled="true"]:active {
+  transform: none;
+}
+
+.stepper__value {
+  min-width: 1.5rem;
   text-align: center;
-}
-
-.cta-band__inner {
-  max-width: 40rem;
-  margin: 0 auto;
-}
-
-.cta-band__eyebrow {
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
   font-weight: 500;
-  margin-bottom: 0.875rem;
 }
 
-.cta-band__heading {
+.stepper--active {
+  background-color: var(--primary);
+  box-shadow: none;
+  color: var(--white);
+}
+
+.stepper--active .stepper__button {
+  color: var(--white);
+}
+
+.stepper--active .stepper__button:hover {
+  background-color: var(--primary-dark);
+}
+
+.stepper--small .stepper__button {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.stepper__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.stepper--small .stepper__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ============================================
+   Order summary: an order slip with a scalloped top edge, echoing the logo badge.
+   The wrapper carries the scallops and the shadow, so the slip itself can scroll.
+   ============================================ */
+.order__aside {
+  --scallop: 0.5rem;
+  position: relative;
+  margin-top: var(--scallop);
+  /* drop-shadow follows the scallops; box-shadow would only draw a rectangle */
+  filter: drop-shadow(0 1px 1px color-mix(in srgb, var(--primary) 10%, transparent))
+          drop-shadow(0 14px 22px color-mix(in srgb, var(--primary) 18%, transparent));
+}
+
+.order__aside::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--scallop);
+  background: radial-gradient(circle at 50% 100%, var(--white) calc(var(--scallop) - 0.5px), transparent var(--scallop))
+              0 0 / calc(var(--scallop) * 2) var(--scallop);
+  background-repeat: round no-repeat;
+}
+
+.summary {
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  background-color: var(--white);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.summary__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.summary__title {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
-  font-size: 2.375rem;
-  line-height: 1.2;
-  color: var(--white);
-  margin-bottom: 0.75rem;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-snug);
 }
 
-.cta-band__sub {
-  font-size: 0.9375rem;
+.summary__title:focus-visible {
+  outline-offset: 2px;
+}
+
+.summary__count {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.summary__lines {
+  list-style: none;
+  margin-top: var(--space-3);
+}
+
+/* One row per line: name and size, stepper, line total */
+.line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 4.25rem;
+  align-items: center;
+  column-gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--surface);
+}
+
+.line__text {
+  line-height: var(--leading-compact);
+}
+
+.line__name {
+  display: block;
+  font-weight: 500;
+}
+
+.line__size {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.line__price {
+  justify-self: end;
+  font-size: var(--text-xl);
+}
+
+/* Empty basket: an invitation to start, in the same place the lines will appear */
+.summary__empty {
+  margin-top: var(--space-4);
+  padding: var(--space-6) var(--space-4);
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.summary__empty-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0 auto var(--space-2);
+  stroke-width: 1.25;
   color: var(--accent);
-  line-height: 1.65;
-  margin-bottom: 2.25rem;
 }
 
-.cta-band__actions {
+.summary__empty-title {
+  font-weight: 500;
+}
+
+.summary__empty-text {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.summary__total {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
-@media (min-width: 768px) {
-  .cta-band {
-    padding: 6rem 2rem;
+.summary__total-label {
+  font-weight: 500;
+}
+
+.summary__total-value {
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+}
+
+.summary__note {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+/* ============================================
+   Collection or delivery, and date
+   ============================================ */
+.field {
+  margin-top: var(--space-6);
+  border: 0;
+  min-width: 0;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.choice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.choice__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1.5px var(--border);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+
+/* The real radio stays in the page for keyboards and screen readers; the label is what you see */
+.choice__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice__option:hover {
+  background-color: var(--bg);
+}
+
+.choice__option:has(.choice__input:checked) {
+  background-color: var(--bg);
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.choice__option:has(.choice__input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.date-input {
+  display: block;
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--white);
+  font-size: var(--text-md); /* 16px or more stops iOS zooming in on focus */
+  accent-color: var(--primary);
+}
+
+.date-input:focus-visible {
+  outline-offset: 1px;
+}
+
+.summary__payment {
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  line-height: var(--leading-compact);
+}
+
+.summary__send {
+  margin-top: var(--space-5);
+}
+
+.send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 3.25rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--primary);
+  color: var(--white);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.send:hover {
+  background-color: var(--primary-dark);
+}
+
+.send:active {
+  transform: scale(0.98);
+}
+
+.send__icon {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* aria-disabled instead of disabled: the button stays focusable, so screen readers can find it and its hint */
+.send[aria-disabled="true"] {
+  background-color: var(--surface);
+  color: var(--text);
+  cursor: not-allowed;
+}
+
+.send[aria-disabled="true"]:active {
+  transform: none;
+}
+
+.send__hint {
+  margin-top: var(--space-2);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+/* ============================================
+   Mobile basket bar (wired up at Stage 3)
+   ============================================ */
+.basket-bar {
+  position: fixed;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  max-width: 30rem;
+  margin-inline: auto; /* centred on tablets instead of stretching edge to edge */
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 3.75rem;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-6);
+  border-radius: var(--radius-pill);
+  background-color: var(--primary);
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
+  /* Parked below the screen, and out of the tab order, until the basket has something */
+  transform: translateY(calc(100% + var(--space-8)));
+  visibility: hidden;
+  transition: transform var(--duration-slow) var(--ease-out), visibility 0s linear var(--duration-slow);
+}
+
+.basket-bar--visible {
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.basket-bar__label {
+  display: block;
+  font-size: var(--text-xs);
+  opacity: 0.85;
+}
+
+.basket-bar__total {
+  display: block;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+}
+
+.basket-bar__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: 0 var(--space-5) 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background-color: var(--white);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.basket-bar__count {
+  display: grid;
+  place-items: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: var(--text-sm);
+}
+
+/* ============================================
+   Gallery, reasons and questions share one rhythm
+   ============================================ */
+.gallery,
+.why,
+.faq {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) var(--section-space);
+}
+
+.gallery__grid {
+  columns: 2;
+  column-gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.gallery__item {
+  break-inside: avoid;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--surface);
+}
+
+.gallery__image {
+  width: 100%;
+  height: auto;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.gallery__item:hover .gallery__image {
+  transform: scale(1.04);
+}
+
+@media (min-width: 48rem) {
+  .gallery__grid {
+    columns: 3;
+    column-gap: var(--space-4);
   }
 
-  .cta-band__heading {
-    font-size: 3.125rem;
+  .gallery__item {
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-lg);
   }
+}
+
+/* ============================================
+   Why choose Sweet Purpose
+   ============================================ */
+.why__list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.why__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.why__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  stroke-width: 1.5;
+  color: var(--primary);
+}
+
+.why__text {
+  font-weight: 500;
+  line-height: var(--leading-compact);
+}
+
+.why__detail {
+  display: block;
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+@media (min-width: 40rem) {
+  .why__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .why__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .why__item {
+    flex-direction: column;
+  }
+}
+
+/* ============================================
+   Frequently asked questions
+   ============================================ */
+.faq__list {
+  max-width: 48rem;
+  margin-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: var(--tap-target);
+  padding-block: var(--space-4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+/* A plus drawn with two lines. Opening shrinks the upright one to nothing, which leaves a minus */
+.faq__question::after {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 1.5px, 1.5px 100%;
+  transition: background-size var(--duration-base) var(--ease-out);
+}
+
+.faq__item[open] .faq__question::after {
+  background-size: 100% 1.5px, 1.5px 0%;
+}
+
+.faq__answer {
+  padding-bottom: var(--space-5);
+  max-width: 40rem;
 }
 
 /* ============================================
@@ -444,70 +1169,156 @@ a {
    ============================================ */
 .site-footer {
   background-color: var(--primary-dark);
-  padding: 2.25rem 1.25rem;
+  /* The extra bottom room keeps the mobile basket bar from covering the footer's last line */
+  padding: var(--space-8) var(--gutter) calc(var(--space-8) + var(--space-24));
   text-align: center;
 }
 
 .site-footer__inner {
-  max-width: 70rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.1875rem;
+  gap: var(--space-1);
 }
 
 .site-footer__tagline {
+  margin-bottom: var(--space-2);
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.125rem;
-  font-weight: 400;
-  color: var(--accent);
+  font-size: var(--text-lg);
+  color: var(--bg);
   letter-spacing: 0.04em;
-  margin-bottom: 0.375rem;
+}
+
+.site-footer__links {
+  display: flex;
+  gap: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--bg);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.site-footer__link:focus-visible {
+  outline-color: var(--bg);
 }
 
 .site-footer__copy {
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: var(--accent);
-  opacity: 0.75;
+  font-size: var(--text-sm);
+  color: var(--bg);
 }
 
 .site-footer__credit {
-  font-size: 0.6875rem;
-  color: var(--accent);
-  opacity: 0.4;
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--bg);
+  opacity: 0.8;
   letter-spacing: 0.06em;
-  margin-top: 0.25rem;
 }
 
 /* ============================================
-   Reveal animations
+   Hero entrance: CSS alone, so the hero never waits on JavaScript
    ============================================ */
-.js-reveal {
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+  }
+}
+
+.hero__headline,
+.hero__sub,
+.hero__actions,
+.hero__media {
+  animation: rise-in var(--duration-slow) var(--ease-out) both;
+}
+
+.hero__sub     { animation-delay: 40ms; }
+.hero__media   { animation-delay: 60ms; }
+.hero__actions { animation-delay: 80ms; }
+
+/* ============================================
+   Gallery reveal on scroll.
+   Photos are hidden only once javascript.js has set html.js, and javascript.js shows them again.
+   ============================================ */
+.js .reveal {
   opacity: 0;
-  transform: translateY(1.375rem);
-  transition: opacity 0.75s ease, transform 0.75s ease;
+  transform: translateY(var(--space-4));
+  transition: opacity var(--duration-slow) ease, transform var(--duration-slow) var(--ease-out);
 }
 
-.js-reveal.is-visible {
+.js .reveal.reveal--visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* Hero stagger */
-.hero__headline.js-reveal   { transition-delay: 0.1s; }
-.hero__sub.js-reveal        { transition-delay: 0.2s; }
-.hero__actions.js-reveal    { transition-delay: 0.3s; }
-.hero__media.js-reveal      { transition-delay: 0.15s; }
+.gallery__item.reveal:nth-child(even) { transition-delay: 50ms; }
 
-/* Gallery stagger */
-.gallery__item.js-reveal:nth-child(2) { transition-delay: 0.08s; }
-.gallery__item.js-reveal:nth-child(3) { transition-delay: 0.16s; }
-.gallery__item.js-reveal:nth-child(4) { transition-delay: 0.06s; }
-.gallery__item.js-reveal:nth-child(5) { transition-delay: 0.14s; }
-.gallery__item.js-reveal:nth-child(6) { transition-delay: 0.22s; }
+/* ============================================
+   Desktop: products and summary side by side
+   ============================================ */
+@media (min-width: 48rem) {
+  :root {
+    --gutter: var(--space-8);
+  }
+}
+
+@media (min-width: 64rem) {
+  .site-footer {
+    padding-bottom: var(--space-8);
+  }
+
+  .order__layout {
+    grid-template-columns: minmax(0, 1fr) 23rem;
+    align-items: start;
+  }
+
+  .category__title {
+    font-size: var(--text-4xl);
+  }
+
+  /* Stays in view while the products scroll. On short screens the slip scrolls inside itself */
+  .order__aside {
+    position: sticky;
+    top: calc(var(--space-6) + var(--scallop));
+  }
+
+  .summary {
+    max-height: calc(100dvh - var(--space-12) - var(--scallop));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding-bottom: 0;
+  }
+
+  .summary__field,
+  .summary__payment {
+    margin-top: var(--space-4);
+  }
+
+  /* The send button never scrolls out of the slip; the fade hints there is more above */
+  .summary__send {
+    position: sticky;
+    bottom: 0;
+    margin-inline: calc(-1 * var(--space-5));
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    background: linear-gradient(to bottom, transparent, var(--white) var(--space-4));
+  }
+
+  .basket-bar {
+    display: none;
+  }
+}
 
 /* ============================================
    Reduced motion
@@ -517,21 +1328,16 @@ a {
     scroll-behavior: auto;
   }
 
-  .js-reveal {
-    opacity: 1;
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .btn:hover,
+  .gallery__item:hover .gallery__image {
     transform: none;
-    transition: none;
-  }
-
-  .btn {
-    transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
-  }
-
-  .btn:hover {
-    transform: none;
-  }
-
-  .gallery__item img {
-    transition: none;
   }
 }
