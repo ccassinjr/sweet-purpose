@@ -1,21 +1,11 @@
 // @ts-check
 import { basketKey } from './basket.js';
+import { formatPrice } from './money.js';
 import { ALLERGEN_NAMES, CATEGORIES, CEREAL_NAMES, PRODUCTS, isLive } from './products.js';
 
 /** @typedef {import('./products.js').Allergens} Allergens */
 /** @typedef {import('./products.js').LiveProduct} LiveProduct */
 /** @typedef {import('./products.js').Category} Category */
-
-/** Money is always shown as £3.75, never "£ 3,75", whatever the visitor's language */
-const money = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
-
-/**
- * @param {number} pence
- * @returns {string}
- */
-export function formatPrice(pence) {
-  return money.format(pence / 100);
-}
 
 /**
  * Finds an element the page must have. Failing loudly here is better than a card that silently stays empty.

@@ -10,9 +10,11 @@ import {
   quantityOf,
   totalPence,
 } from './basket.js';
-import { dateError, earliestDate, methodError, toInputValue } from './details.js';
-import { formatPrice, mustFind } from './order-ui.js';
-import { MIN_NOTICE_DAYS } from './products.js';
+import { dateError, earliestDate, methodError, parseInputValue, toInputValue } from './details.js';
+import { formatPrice } from './money.js';
+import { mustFind } from './order-ui.js';
+import { MIN_NOTICE_DAYS, WHATSAPP_NUMBER } from './products.js';
+import { buildLink, buildMessage } from './whatsapp.js';
 
 /** @typedef {import('./basket.js').Basket} Basket */
 /** @typedef {import('./basket.js').SizeInfo} SizeInfo */
@@ -74,6 +76,8 @@ function findElements() {
     status: find('#order-status'),
     send: find('#send'),
     sendHint: find('#send-hint'),
+    sendFallback: find('#send-fallback'),
+    sendFallbackLink: /** @type {HTMLAnchorElement} */ (find('#send-fallback-link')),
     radios: /** @type {HTMLInputElement[]} */ ([...document.querySelectorAll('input[name="recebimento"]')]),
     dateInput: /** @type {HTMLInputElement} */ (find('#data')),
   };
@@ -119,6 +123,7 @@ function handleStepperClick(event) {
   if (!key || !sizes.has(key)) return;
 
   basket = changeQuantity(basket, key, button.dataset.action === 'plus' ? 1 : -1);
+  hideFallback();
   renderKey(key);
   renderTotals();
   announce(key);
@@ -325,6 +330,9 @@ function startDetailsForm() {
     for (const control of field.controls) {
       control.addEventListener('input', () => recheck(field));
       control.addEventListener('change', () => recheck(field));
+      // The method and the date are part of the message too
+      control.addEventListener('input', hideFallback);
+      control.addEventListener('change', hideFallback);
     }
   }
 
@@ -388,5 +396,39 @@ function handleSend() {
     return;
   }
 
-  // Stage 4: build the WhatsApp message and open it from here
+  openWhatsApp();
+}
+
+/**
+ * Runs only after every field passed, so the method and date are known to be valid.
+ * The basket stays as it was: the order isn't placed until it is confirmed on WhatsApp.
+ */
+function openWhatsApp() {
+  const method = ui.radios.find((radio) => radio.checked)?.value;
+  const date = parseInputValue(ui.dateInput.value);
+  if ((method !== 'retirada' && method !== 'entrega') || !date) return;
+
+  const message = buildMessage({ lines: orderLines(basket, sizes), method, date });
+  const url = buildLink(WHATSAPP_NUMBER, message);
+  // noopener keeps WhatsApp's page from reaching back into this one. It also makes window.open return null,
+  // so a blocked tab can't be detected: the fallback link below is always offered instead
+  window.open(url, '_blank', 'noopener');
+  showFallback(url);
+  // Says only that a tab was opened: the order isn't placed until it is confirmed on WhatsApp
+  ui.status.textContent =
+    'Abrimos o WhatsApp numa nova aba. Se não abriu, use o link Abrir o WhatsApp, abaixo do botão.';
+}
+
+/**
+ * A link to the same order, for when the tab didn't open (popup blockers, in-app browsers like Instagram's)
+ * @param {string} url
+ */
+function showFallback(url) {
+  ui.sendFallbackLink.href = url;
+  ui.sendFallback.hidden = false;
+}
+
+/** Called whenever the order changes, so the link never points at an old one */
+function hideFallback() {
+  ui.sendFallback.hidden = true;
 }

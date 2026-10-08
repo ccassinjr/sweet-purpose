@@ -271,6 +271,18 @@
                   <p class="send__hint" id="send-hint">
                     Escolha pelo menos um doce para enviar.
                   </p>
+                  <!-- Shown after a valid send, in case the new tab was blocked. js/basket-ui.js sets the href -->
+                  <p class="send__fallback" id="send-fallback" hidden>
+                    Não abriu?
+                    <a
+                      class="order__more-link"
+                      id="send-fallback-link"
+                      href="https://wa.me/447547266089"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Abrir o WhatsApp</a
+                    >
+                  </p>
                 </div>
               </section>
             </div>

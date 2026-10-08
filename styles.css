@@ -923,6 +923,19 @@ input {
   background-color: var(--white);
   font-size: var(--text-md); /* 16px or more stops iOS zooming in on focus */
   accent-color: var(--primary);
+  /* iOS Safari gives date inputs an intrinsic minimum width that beats width: 100%, and collapses the
+     empty field. Dropping the native look and the minimum width lets it fit its container; min-height keeps it tall */
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+}
+
+/* iOS centres the value horizontally, so left-align it like every other field in the summary.
+   Without its native look it also sits at the top of the box: a line height equal to the inner height
+   (min-height minus the 1.5px border on both sides) centres it. Other browsers already fill that height, so nothing moves */
+.date-input::-webkit-date-and-time-value {
+  text-align: left;
+  line-height: calc(var(--tap-target) - 3px);
 }
 
 .date-input:focus-visible {
@@ -1012,6 +1025,12 @@ input {
   text-align: center;
   font-size: var(--text-xs);
   color: var(--muted);
+}
+
+.send__fallback {
+  margin-top: var(--space-2);
+  text-align: center;
+  font-size: var(--text-sm);
 }
 
 /* ============================================
