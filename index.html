@@ -158,13 +158,16 @@
             </div>
 
             <div class="order__aside">
-              <!-- Resumo do pedido: static for now. Quantities and totals arrive at Stage 3 -->
+              <!-- Resumo do pedido: js/basket-ui.js fills the lines and the total -->
               <section class="summary" id="resumo" aria-labelledby="summary-title">
                 <div class="summary__head">
                   <h2 class="summary__title" id="summary-title" tabindex="-1">
                     Resumo do pedido
                   </h2>
+                  <p class="summary__count" id="summary-count" hidden></p>
                 </div>
+
+                <ul class="summary__lines" id="summary-lines" role="list" hidden></ul>
 
                 <div class="summary__empty">
                   <svg
@@ -188,7 +191,7 @@
                 <div class="summary__details" hidden>
                   <div class="summary__total">
                     <span class="summary__total-label">Total estimado</span>
-                    <span class="summary__total-value price">£0.00</span>
+                    <span class="summary__total-value price" id="summary-total">£0.00</span>
                   </div>
                   <p class="summary__note">
                     Entrega não inclusa. Confirmamos o valor final pelo WhatsApp.
@@ -219,11 +222,25 @@
                         Entrega
                       </label>
                     </div>
+                    <p class="field__error" id="recebimento-error" hidden>
+                    <svg class="icon field__error-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7.5v5.5M12 16.5h.01" />
+                    </svg>
+                    <span class="field__error-text"></span>
+                  </p>
                   </fieldset>
 
                   <div class="field summary__field">
                     <label class="field__label" for="data">Data preferida</label>
                     <input class="date-input" type="date" id="data" />
+                    <p class="field__error" id="data-error" hidden>
+                    <svg class="icon field__error-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7.5v5.5M12 16.5h.01" />
+                    </svg>
+                    <span class="field__error-text"></span>
+                  </p>
                   </div>
 
                   <p class="summary__payment">
@@ -234,6 +251,7 @@
                 <div class="summary__send">
                   <button
                     class="send"
+                    id="send"
                     type="button"
                     aria-disabled="true"
                     aria-describedby="send-hint"
@@ -427,6 +445,47 @@
       </div>
     </footer>
 
+    <!-- Hidden status line: screen readers hear each change and the new total. It sits in the page from the start, because readers often miss a region added at the moment it changes -->
+    <p class="visually-hidden" id="order-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <!-- Mobile basket bar. Outside .order__aside on purpose: that element's filter would make it the containing block for position: fixed -->
+    <div class="basket-bar" id="basket-bar">
+      <p class="basket-bar__info">
+        <span class="basket-bar__label">Total estimado</span>
+        <span class="basket-bar__total price" id="bar-total">£0.00</span>
+      </p>
+      <a class="basket-bar__cta" href="#resumo" id="bar-link">
+        <span class="basket-bar__count"
+          ><span id="bar-count">0</span><span class="visually-hidden" id="bar-unit"> itens</span></span
+        >
+        Ver pedido
+      </a>
+    </div>
+
+    <!-- One line of the order summary. js/basket-ui.js clones it for each size in the basket -->
+    <template id="line-template">
+      <li class="line">
+        <span class="line__text">
+          <span class="line__name"></span>
+          <span class="line__size"></span>
+        </span>
+        <div class="stepper stepper--small stepper--active line__stepper">
+          <button class="stepper__button" type="button" data-action="minus" aria-disabled="true">
+            <svg class="icon stepper__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M5 12h14" />
+            </svg>
+          </button>
+          <span class="stepper__value">0</span>
+          <button class="stepper__button" type="button" data-action="plus">
+            <svg class="icon stepper__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+        </div>
+        <span class="line__price price"></span>
+      </li>
+    </template>
+
     <!-- One product card. js/order-ui.js clones it for each live product -->
     <template id="product-template">
       <article class="product">
@@ -458,6 +517,19 @@
           <li class="size">
             <span class="size__label"></span>
             <span class="size__price price"></span>
+            <div class="stepper size__stepper">
+              <button class="stepper__button" type="button" data-action="minus" aria-disabled="true">
+                <svg class="icon stepper__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M5 12h14" />
+                </svg>
+              </button>
+              <span class="stepper__value">0</span>
+              <button class="stepper__button" type="button" data-action="plus">
+                <svg class="icon stepper__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </button>
+            </div>
           </li>
         </ul>
       </article>

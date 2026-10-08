@@ -1,4 +1,5 @@
 // @ts-check
+import { basketKey } from './basket.js';
 import { ALLERGEN_NAMES, CATEGORIES, CEREAL_NAMES, PRODUCTS, isLive } from './products.js';
 
 /** @typedef {import('./products.js').Allergens} Allergens */
@@ -23,7 +24,7 @@ export function formatPrice(pence) {
  * @param {string} selector
  * @returns {T}
  */
-function mustFind(parent, selector) {
+export function mustFind(parent, selector) {
   const element = /** @type {T | null} */ (parent.querySelector(selector));
   if (!element) throw new Error(`Missing ${selector} in index.html`);
   return element;
@@ -112,10 +113,12 @@ function buildProductCard(template, product) {
   sizeTemplate.remove();
   product.sizes.forEach((size, index) => {
     const row = /** @type {HTMLElement} */ (sizeTemplate.cloneNode(true));
-    // The basket key (Stage 3): product id plus size position, never the label
-    row.dataset.key = `${product.id}:${index}`;
+    row.dataset.key = basketKey(product.id, index);
     mustFind(row, '.size__label').textContent = size.label;
     mustFind(row, '.size__price').textContent = formatPrice(size.pence);
+    // The buttons are named after the sweet, so a screen reader can tell the rows apart
+    mustFind(row, '[data-action="plus"]').setAttribute('aria-label', `Mais ${product.name}, ${size.label}`);
+    mustFind(row, '[data-action="minus"]').setAttribute('aria-label', `Menos ${product.name}, ${size.label}`);
     sizes.append(row);
   });
 
@@ -158,13 +161,23 @@ function buildCategory(category, index) {
 }
 
 /**
+ * The live products in the order the page shows them: by category, in menu order.
+ * Hidden placeholders never appear.
+ * @returns {LiveProduct[]}
+ */
+export function menuProducts() {
+  const liveProducts = PRODUCTS.filter(isLive);
+  return CATEGORIES.flatMap((category) => liveProducts.filter((product) => product.category === category.id));
+}
+
+/**
  * Draws every live product, grouped by category in menu order.
- * Hidden placeholders and empty categories never reach the page.
+ * Empty categories never reach the page.
  */
 export function renderCatalogue() {
   const container = mustFind(document, '#products');
   const template = /** @type {HTMLTemplateElement} */ (mustFind(document, '#product-template'));
-  const liveProducts = PRODUCTS.filter(isLive);
+  const liveProducts = menuProducts();
 
   const sections = [];
   for (const category of CATEGORIES) {

@@ -1,5 +1,6 @@
 // @ts-check
-import { renderCatalogue, showCatalogueError } from './js/order-ui.js';
+import { startOrderBuilder } from './js/basket-ui.js';
+import { menuProducts, renderCatalogue, showCatalogueError } from './js/order-ui.js';
 
 // Set first, so the gallery only hides its photos (CSS: .js .reveal) once this module is running
 // and startReveals() can show them again. If the module never loads, nothing stays hidden.
@@ -40,8 +41,9 @@ startReveals();
 
 try {
   renderCatalogue();
+  startOrderBuilder(menuProducts());
 } catch (error) {
-  // One bad product must not leave an empty order section: say so, and point to WhatsApp
+  // One bad product, or a missing element, must not leave dead steppers: say so, and point to WhatsApp
   console.error('Could not draw the catalogue', error);
   showCatalogueError();
 }
