@@ -36,7 +36,7 @@ export const WHATSAPP_NUMBER = '447547266089';
 /**
  * @typedef {object} LiveProduct
  * @property {'live'} status
- * @property {string} id             lowercase-with-hyphens, also the photo file: assets/products/<id>.jpg
+ * @property {string} id             lowercase-with-hyphens, also the photo files: assets/products/<id>.jpg (1200px) and assets/products/small/<id>.jpg (320px on the short side)
  * @property {string} name
  * @property {CategoryId} category
  * @property {string} ingredients    copied as written in content.md

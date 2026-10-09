@@ -321,8 +321,8 @@
               src="assets/photo-03.jpeg"
               alt="Morango do amor cortado ao meio numa tábua de madeira, mostrando o morango por dentro"
               loading="lazy"
-              width="1152"
-              height="2048"
+              width="675"
+              height="1200"
             />
           </figure>
 
@@ -332,8 +332,8 @@
               src="assets/photo-04.jpeg"
               alt="Caixa de biscoitos Sweet Purpose com laço vermelho"
               loading="lazy"
-              width="1024"
-              height="1536"
+              width="800"
+              height="1200"
             />
           </figure>
 
@@ -352,10 +352,10 @@
             <img
               class="gallery__image"
               src="assets/photo-06.jpeg"
-              alt="Biscoitos artesanais numa tigela ao lado de caneca Sweet Purpose"
+              alt="Biscoitos artesanais numa tigela ao lado de uma caneca Sweet Purpose"
               loading="lazy"
-              width="1152"
-              height="2048"
+              width="675"
+              height="1200"
             />
           </figure>
         </div>
@@ -453,7 +453,16 @@
         <p class="site-footer__copy">
           © <span id="js-year">2026</span> Sweet Purpose · sweetpurpose.co.uk
         </p>
-        <p class="site-footer__credit" lang="en">designed by ccassinjr</p>
+        <p class="site-footer__credit" lang="en">
+          <span class="site-footer__credit-text">designed by</span>
+          <a
+            class="site-footer__credit-link"
+            href="https://ccassinjr.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >ccassinjr</a
+          >
+        </p>
       </div>
     </footer>
 
@@ -498,7 +507,10 @@
       </li>
     </template>
 
-    <!-- One product card. js/order-ui.js clones it for each live product -->
+    <!-- One product card. js/order-ui.js clones it for each live product and sets srcset to small/ 320w
+         and the large file 1200w. The small copies are 320px on the short side. The large files are
+         675 to 1200px wide because the originals aren't cropped. 1200w makes the same choice an exact
+         descriptor would, and it becomes exact when the square shoot replaces them. -->
     <template id="product-template">
       <article class="product">
         <img
@@ -506,6 +518,7 @@
           alt=""
           width="600"
           height="600"
+          sizes="(min-width: 40rem) 21rem, 6.5rem"
           loading="lazy"
         />
         <div class="product__photo product__photo--empty" aria-hidden="true">

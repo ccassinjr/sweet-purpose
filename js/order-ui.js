@@ -91,7 +91,11 @@ function buildProductCard(template, product) {
   const photo = /** @type {HTMLImageElement} */ (mustFind(card, '.product__photo--image'));
   const placeholder = mustFind(card, '.product__photo--empty');
   if (product.photo) {
-    photo.src = `assets/products/${product.id}.jpg`;
+    // Two copies of each photo: a small one (320px on the short side) for phone thumbnails, the 1200px one for large cards
+    const small = `assets/products/small/${product.id}.jpg`;
+    const large = `assets/products/${product.id}.jpg`;
+    photo.srcset = `${small} 320w, ${large} 1200w`;
+    photo.src = large; // for browsers that ignore srcset
     photo.style.objectPosition = product.photo.position;
     placeholder.remove();
   } else {
