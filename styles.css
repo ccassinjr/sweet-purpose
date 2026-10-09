@@ -304,6 +304,10 @@ input {
   font-size: var(--text-display);
   line-height: var(--leading-tight);
   color: var(--primary);
+  /* Guards the one-column hero below 48rem, where the column can be wider than the headline needs.
+     Without the cap it runs on two long lines instead of three balanced ones */
+  max-inline-size: 18ch;
+  text-wrap: balance;
 }
 
 .hero__sub {
@@ -521,7 +525,7 @@ input {
   color: var(--muted);
 }
 
-/* English first, Portuguese second, same size and weight */
+/* English first, Portuguese second, same size and colour */
 .product__allergens {
   grid-area: allergens;
   align-self: start;
@@ -532,12 +536,25 @@ input {
   line-height: var(--leading-compact);
 }
 
-.product__allergen-line + .product__allergen-line {
+/* Each language is a group of rows. The value follows its label and wraps underneath it */
+.product__allergen-group + .product__allergen-group {
+  margin-top: var(--space-3);
+}
+
+.product__allergen-row + .product__allergen-row {
   margin-top: var(--space-1);
 }
 
+.product__allergen-label,
+.product__allergen-value {
+  display: inline;
+  margin: 0;
+}
+
+/* "May contain:" and "Pode conter:" never break in half */
 .product__allergen-label {
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .product__sizes {

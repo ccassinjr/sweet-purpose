@@ -21,7 +21,7 @@ export function mustFind(parent, selector) {
 }
 
 /**
- * One sentence of the allergen line: "Contains: milk, gluten (wheat)."
+ * The two lists behind the allergen rows: "milk, gluten (wheat)" and "peanuts".
  * The cereal behind gluten goes in brackets, as UK labelling rules ask.
  * @param {Allergens} allergens
  * @param {'pt' | 'en'} language
@@ -41,22 +41,30 @@ export function allergenLists(allergens, language) {
 }
 
 /**
- * Fills one allergen line: a bold label, then the list.
- * @param {Element} line
+ * Fills one language's <dl> with a "Contains" row and a "May contain" row.
+ * An empty list gets no row, so a card never shows a label with nothing after it.
+ * @param {Element} group
  * @param {{ contains: string, mayContain: string }} lists
  * @param {{ contains: string, mayContain: string }} labels
  */
-function fillAllergenLine(line, lists, labels) {
-  const pieces = [
+function fillAllergenGroup(group, lists, labels) {
+  const rows = [
     [labels.contains, lists.contains],
     [labels.mayContain, lists.mayContain],
   ];
-  line.replaceChildren();
-  pieces.forEach(([label, list], index) => {
-    const labelEl = document.createElement('span');
-    labelEl.className = 'product__allergen-label';
-    labelEl.textContent = label;
-    line.append(labelEl, ` ${list}${index === 0 ? '. ' : ''}`);
+  group.replaceChildren();
+  rows.forEach(([label, value]) => {
+    if (!value) return;
+    const row = document.createElement('div');
+    row.className = 'product__allergen-row';
+    const term = document.createElement('dt');
+    term.className = 'product__allergen-label';
+    term.textContent = label;
+    const description = document.createElement('dd');
+    description.className = 'product__allergen-value';
+    description.textContent = value;
+    row.append(term, ' ', description);
+    group.append(row);
   });
 }
 
@@ -79,11 +87,11 @@ function buildProductCard(template, product) {
   mustFind(card, '.product__ingredients').textContent = `Ingredientes: ${product.ingredients}`;
 
   // English first, Portuguese second, same size: allergen information must be in English
-  fillAllergenLine(mustFind(card, '.product__allergen-line--en'), allergenLists(product.allergens, 'en'), {
+  fillAllergenGroup(mustFind(card, '.product__allergen-group--en'), allergenLists(product.allergens, 'en'), {
     contains: 'Contains:',
     mayContain: 'May contain:',
   });
-  fillAllergenLine(mustFind(card, '.product__allergen-line--pt'), allergenLists(product.allergens, 'pt'), {
+  fillAllergenGroup(mustFind(card, '.product__allergen-group--pt'), allergenLists(product.allergens, 'pt'), {
     contains: 'Contém:',
     mayContain: 'Pode conter:',
   });
