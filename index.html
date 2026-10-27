@@ -361,43 +361,46 @@
         </div>
       </section>
 
+      <!-- A full-width wine band, like the footer. The inner wrapper keeps the cards on the same grid as the sections around it -->
       <section class="why" aria-labelledby="why-title">
-        <h2 class="section-title" id="why-title">Por que escolher a Sweet Purpose?</h2>
-        <ul class="why__list" role="list">
-          <li class="why__item">
-            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-              <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z" />
-            </svg>
-            <p class="why__text">Feito artesanalmente</p>
-          </li>
-          <li class="why__item">
-            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-              <path d="M12 21c-4.5 0-8-3.4-8-8 0-5 4-8.5 8-10 4 1.5 8 5 8 10 0 4.6-3.5 8-8 8z" />
-              <path d="M12 21V9M12 15l3-3M12 12l-3-3" />
-            </svg>
-            <p class="why__text">
-              Ingredientes frescos
-              <span class="why__detail">sempre que possível, como o coco</span>
-            </p>
-          </li>
-          <li class="why__item">
-            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="8.5" />
-              <path d="M12 7.5V12l3 2" />
-            </svg>
-            <p class="why__text">Produção sob encomenda</p>
-          </li>
-          <li class="why__item">
-            <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-              <path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z" />
-              <path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9" />
-            </svg>
-            <p class="why__text">
-              Envio para todo o Reino Unido
-              <span class="why__detail">exceto produtos delicados</span>
-            </p>
-          </li>
-        </ul>
+        <div class="why__inner">
+          <h2 class="section-title why__title" id="why-title">Por que escolher a Sweet Purpose?</h2>
+          <ul class="why__list" role="list">
+            <li class="why__item">
+              <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z" />
+              </svg>
+              <p class="why__text">Feito artesanalmente</p>
+            </li>
+            <li class="why__item">
+              <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                <path d="M12 21c-4.5 0-8-3.4-8-8 0-5 4-8.5 8-10 4 1.5 8 5 8 10 0 4.6-3.5 8-8 8z" />
+                <path d="M12 21V9M12 15l3-3M12 12l-3-3" />
+              </svg>
+              <p class="why__text">
+                Ingredientes frescos
+                <span class="why__detail">sempre que possível, como o coco</span>
+              </p>
+            </li>
+            <li class="why__item">
+              <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M12 7.5V12l3 2" />
+              </svg>
+              <p class="why__text">Produção sob encomenda</p>
+            </li>
+            <li class="why__item">
+              <svg class="icon why__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                <path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z" />
+                <path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9" />
+              </svg>
+              <p class="why__text">
+                Envio para todo o Reino Unido
+                <span class="why__detail">exceto produtos delicados</span>
+              </p>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section class="faq" aria-labelledby="faq-title">
@@ -521,14 +524,10 @@
           sizes="(min-width: 40rem) 21rem, 6.5rem"
           loading="lazy"
         />
+        <!-- Shown until the product has a photo. js/order-ui.js writes the sweet's first letter -->
         <div class="product__photo product__photo--empty" aria-hidden="true">
-          <svg class="icon product__photo-icon" focusable="false" viewBox="0 0 24 24">
-            <circle cx="12" cy="8.5" r="4.5" />
-            <path d="M4 13q1-1.2 2 0t2 0 2 0 2 0 2 0 2 0 2 0 2 0" />
-            <path d="m5 14 1.75 6.5h10.5L19 14" />
-            <path d="M9.5 14.5 10 20M14.5 14.5 14 20" />
-          </svg>
-          <span>Foto em breve</span>
+          <span class="product__photo-letter" translate="no"></span>
+          <span class="product__photo-note">Foto em breve</span>
         </div>
         <div class="product__body">
           <h4 class="product__name" translate="no"></h4>

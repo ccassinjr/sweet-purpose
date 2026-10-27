@@ -488,21 +488,28 @@ input {
   background-color: var(--surface);
 }
 
-/* Shown until a product has its photo */
+/* Shown until a product has its photo: the sweet's initial over a small "Foto em breve" */
 .product__photo--empty {
   display: grid;
   place-items: center;
   align-content: center;
   gap: var(--space-1);
   color: var(--text);
-  font-size: var(--text-xs);
   text-align: center;
 }
 
-.product__photo-icon {
-  width: 2rem;
-  height: 2rem;
-  stroke-width: 1.25;
+/* The hero's display type, so the initial reads as a monogram rather than a missing image */
+.product__photo-letter {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
+}
+
+.product__photo-note {
+  font-size: var(--text-xs);
+  line-height: var(--leading-compact);
 }
 
 .product__body {
@@ -530,7 +537,7 @@ input {
   grid-area: allergens;
   align-self: start;
   padding: var(--space-2) var(--space-3);
-  background-color: var(--bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   line-height: var(--leading-compact);
@@ -1126,33 +1133,35 @@ input {
 }
 
 /* ============================================
-   Gallery, reasons and questions share one rhythm
+   Gallery and questions share one rhythm
    ============================================ */
 .gallery,
-.why,
 .faq {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 var(--gutter) var(--section-space);
 }
 
+/* A regular grid: every photo in the same frame, so the rows end level */
 .gallery__grid {
-  columns: 2;
-  column-gap: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
   margin-top: var(--space-8);
 }
 
 .gallery__item {
-  break-inside: avoid;
-  margin-bottom: var(--space-3);
   border-radius: var(--radius-md);
   overflow: hidden;
   background-color: var(--surface);
 }
 
+/* Every photo in a 4:5 frame. object-fit crops on screen only, so the files stay whole */
 .gallery__image {
   width: 100%;
-  height: auto;
+  height: auto; /* the img height attribute would otherwise beat aspect-ratio */
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
   transition: transform var(--duration-slow) var(--ease-out);
 }
 
@@ -1162,19 +1171,34 @@ input {
 
 @media (min-width: 48rem) {
   .gallery__grid {
-    columns: 3;
-    column-gap: var(--space-4);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
   }
 
   .gallery__item {
-    margin-bottom: var(--space-4);
     border-radius: var(--radius-lg);
   }
 }
 
 /* ============================================
-   Why choose Sweet Purpose
+   Why choose Sweet Purpose: a full-width wine band, like the footer
    ============================================ */
+.why {
+  padding-block: var(--section-space);
+  background-color: var(--primary-dark);
+}
+
+.why__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+/* Light text on wine, as in the footer */
+.why__title {
+  color: var(--bg);
+}
+
 .why__list {
   list-style: none;
   display: grid;
@@ -1230,6 +1254,11 @@ input {
 /* ============================================
    Frequently asked questions
    ============================================ */
+/* The wine band above ends at the section's edge, so the questions need their own room on top */
+.faq {
+  padding-top: var(--section-space);
+}
+
 .faq__list {
   max-width: 48rem;
   margin-top: var(--space-8);

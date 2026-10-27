@@ -107,6 +107,8 @@ function buildProductCard(template, product) {
     photo.style.objectPosition = product.photo.position;
     placeholder.remove();
   } else {
+    // The sweet's initial fills the frame until its photo arrives, so the card still looks finished
+    mustFind(placeholder, '.product__photo-letter').textContent = product.name.charAt(0);
     photo.remove();
   }
 
