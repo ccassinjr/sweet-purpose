@@ -127,7 +127,8 @@ export const PRODUCTS = [
     ingredients: 'leite condensado, açúcar, coco fresco, polpa de maracujá, suco concentrado de maracujá Maguary',
     allergens: { contains: ['leite', 'sulfitos'], mayContain: ['amendoim', 'castanhas', 'gluten'] },
     sizes: [{ label: '100g', pence: 400 }],
-    photo: { position: '50% 52%' },
+    // Low enough that the 4:3 desktop frame keeps the fruit halves and the whole row of cocadas
+    photo: { position: '50% 61%' },
   },
   {
     status: 'live',
@@ -221,7 +222,8 @@ export const PRODUCTS = [
     ingredients: 'manteiga com óleo de canola, açúcar, farinha de trigo, goiabada',
     allergens: { contains: ['gluten', 'leite'], glutenFrom: ['trigo'], mayContain: ['amendoim', 'castanhas'] },
     sizes: [{ label: '100g', pence: 375 }],
-    photo: { position: '50% 50%' },
+    // Near the bottom, so the 4:3 desktop frame keeps the goiabada layer; only the tip of the top petal is trimmed
+    photo: { position: '50% 90%' },
   },
   {
     status: 'live',
